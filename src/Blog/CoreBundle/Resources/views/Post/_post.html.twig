@@ -1,0 +1,26 @@
+{#{% extends 'CoreBundle::layout.html.twig' %}#}
+
+{#{% block title %}#}
+
+{#{% endblock %}#}
+
+{#{% block section %}#}
+
+{#{% endblock %}#}
+
+
+<article>
+    <header>
+
+        <h2><a href="#">{{ post.title }}</a></h2>
+        <p>
+            {{ 'blog.core.post.on' | trans }} <time datetime="{{ post.createdAt | date('c') }}">{{ post.createdAt | date }}</time>
+            {{ 'blog.core.post.by' | trans }} <a href="#">{{ post.author.name }}</a>
+
+            </a>
+        </p>
+    </header>
+    <p>
+        {{ post.body | truncate(400) }} &mdash; <a href="#">{{ 'blog.core.post.read.more' | trans }} &raquo;</a>
+    </p>
+</article>

@@ -1,0 +1,9 @@
+blog:
+    core:
+      home: Home
+      title: Symfony Blog
+      post:
+          on: Post created
+          by: by
+          read:
+              more: Read more

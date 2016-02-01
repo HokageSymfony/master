@@ -6,6 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * Class PostController
+ *
+ * @package Blog\CoreBundle\Controller
+ */
 class PostController extends Controller
 {
     /**
@@ -15,7 +20,9 @@ class PostController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $posts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findAll();
+
+        return array('posts' => $posts);
     }
 
 }
