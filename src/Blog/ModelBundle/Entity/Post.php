@@ -50,10 +50,19 @@ class Post extends Timestampable
 
     /**
      * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
 
 
     /**
@@ -200,5 +209,21 @@ class Post extends Timestampable
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 }
