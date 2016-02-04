@@ -1,33 +1,37 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: osboxes
- * Date: 27.01.16
- * Time: 16:57
+ * User: hsn
+ * Date: 9/13/14
+ * Time: 11:25 AM
  */
 
 namespace Blog\ModelBundle\Entity;
 
+
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * Class Timestampable to defined created behavior
+ * Class Timestampable
  *
  * @package Blog\ModelBundle\Entity
  */
 abstract class Timestampable
 {
+
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * Construct
+     * Constructor
      */
     public function __construct()
     {
-        $this->getCreatedAt = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -53,4 +57,5 @@ abstract class Timestampable
     {
         return $this->createdAt;
     }
+
 }

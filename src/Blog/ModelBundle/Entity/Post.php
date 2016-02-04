@@ -4,12 +4,13 @@ namespace Blog\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Post
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Blog\ModelBundle\Repository\PostRepository")
  */
 class Post extends Timestampable
 {
@@ -25,7 +26,7 @@ class Post extends Timestampable
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=155)
+     * @ORM\Column(name="title", type="string", length=150)
      * @Assert\NotBlank()
      */
     private $title;
@@ -33,18 +34,43 @@ class Post extends Timestampable
     /**
      * @var string
      *
-     * @ORM\Column(name="body", type="string", length=255)
+     * @ORM\Column(name="body", type="text")
      * @Assert\NotBlank()
      */
     private $body;
 
     /**
-     * @var ArrayCollection
-     * @ORM\ManyToOne (targetEntity="Author",inversedBy="posts")
-     * @ORM\JoinColumn(name="author_id",referencedColumnName="id", nullable=false)
+     * @var Author
+     *
+     * @ORM\ManyToOne(targetEntity="Author", inversedBy="posts")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
     private $author;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"title"}, unique=true)
+     * @ORM\Column(length=255)
+     */
+    private $slug;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -80,6 +106,7 @@ class Post extends Timestampable
         return $this->title;
     }
 
+
     /**
      * Set body
      *
@@ -104,29 +131,74 @@ class Post extends Timestampable
         return $this->body;
     }
 
-
-
-
     /**
      * Set author
      *
-     * @param \Blog\ModelBundle\Entity\Author $author
+     * @param Author $author
+     *
      * @return Post
      */
     public function setAuthor(Author $author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return \Blog\ModelBundle\Entity\Author 
+     * @return Author
      */
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Author
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Post
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Blog\CoreBundle\CoreBundle(),
             new Blog\ModelBundle\ModelBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

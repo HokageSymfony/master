@@ -21,8 +21,12 @@ class PostController extends Controller
     public function indexAction()
     {
         $posts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findAll();
+        $latestPosts = $this->getDoctrine()->getRepository('ModelBundle:Post')->findLatest(2);
 
-        return array('posts' => $posts);
+        return array(
+            'latest_posts' => $latestPosts,
+            'posts' => $posts
+        );
     }
 
 }

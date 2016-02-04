@@ -4,12 +4,13 @@ namespace Blog\ModelBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Author
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Blog\ModelBundle\Repository\AuthorRepository")
  */
 class Author extends Timestampable
 {
@@ -20,28 +21,41 @@ class Author extends Timestampable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $name;
 
+
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany (targetEntity="Post", mappedBy="author", cascade="remove")
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="author", cascade={"remove"})
      */
     private $posts;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        parent::__construct();
+        //parent::__construct();
+
+        $this->createdAt = new \DateTime();
         $this->posts = new ArrayCollection();
+
     }
 
     /**
@@ -78,25 +92,24 @@ class Author extends Timestampable
         return $this->name;
     }
 
-
-    
     /**
      * Add posts
      *
-     * @param \Blog\ModelBundle\Entity\Post $posts
+     * @param Post $posts
+     *
      * @return Author
      */
     public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
-    
+
         return $this;
     }
 
     /**
      * Remove posts
      *
-     * @param \Blog\ModelBundle\Entity\Post $posts
+     * @param Post $posts
      */
     public function removePost(Post $posts)
     {
@@ -106,10 +119,35 @@ class Author extends Timestampable
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {
         return $this->posts;
     }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Author
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
 }
